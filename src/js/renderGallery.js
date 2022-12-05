@@ -1,4 +1,4 @@
-export const createMarkupElemetsGallery = ({
+export function createMarkupElemetsGallery({
   webformatURL,
   largeImageURL,
   tags,
@@ -6,8 +6,8 @@ export const createMarkupElemetsGallery = ({
   views,
   comments,
   downloads,
-}) =>
-  `<div class="photo-card">
+}) {
+  return `<div class="photo-card">
   <a class="gallery__item" href="${largeImageURL}">
     <img
       class="gallery__image"
@@ -31,15 +31,4 @@ export const createMarkupElemetsGallery = ({
     </p>
   </div>
 </div>`;
-
-export const makeGalleryItem = galleryItems
-  .map(createMarkupElemetsGallery)
-  .join('');
-
-galleryListEl.insertAdjacentHTML('beforeend', makeGalleryItem);
-
-// Usage SimpleLightbox
-const gallery = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-});
+}

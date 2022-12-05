@@ -3,6 +3,7 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { fetchImages } from './js/fetchImages';
+import { createMarkupElemetsGallery } from './js/renderGallery';
 
 const debounce = require('lodash.debounce');
 const DEBOUNCE_DELAY = 300;
@@ -17,15 +18,27 @@ function onInputChange(e) {
   const { value } = e.target;
   console.log(value);
 
-  //   if (value.trim() === '') {
-  //     clg()
-  //   } else {
-  //     fetchCountries(value.trim())
-  //       .then()
-  //       .catch(error =>
-  //         Notiflix.Notify.failure(
-  //           'Sorry, there are no images matching your search query. Please try again'
-  //         )
-  //       );
-  //   }
+  if (value.trim() === '') {
+    Notiflix.Notify.info('Please enter.');
+  } else {
+    fetchImages(value.trim())
+      .then(makeGalleryItem)
+      .catch(error =>
+        Notiflix.Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again'
+        )
+      );
+  }
+}
+
+function makeGalleryItem() {
+  const makeGalleryItem = fetchImages.map(createMarkupElemetsGallery).join('');
+
+  galleryListEl.insertAdjacentHTML('beforeend', makeGalleryItem);
+
+  // Usage SimpleLightbox
+  gallery = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionDelay: 250,
+  });
 }
