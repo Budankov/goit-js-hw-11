@@ -15,9 +15,17 @@ const searchForm = document.querySelector('#search-form');
 const searchBtn = document.querySelector('.search-button');
 const galleryListEl = document.querySelector('.gallery');
 
-searchForm.addEventListener('input', debounce(onInputChange, DEBOUNCE_DELAY));
+searchForm.addEventListener('input', debounce(onSearchImages, DEBOUNCE_DELAY));
 
-function onInputChange(e) {
+function makeGalleryItem() {
+  const makeGalleryItem = fetchImages.map(createMarkupElemetsGallery).join('');
+
+  galleryListEl.insertAdjacentHTML('beforeend', makeGalleryItem);
+}
+
+function onSearchImages(e) {
+  e.preventDefault();
+
   const { value } = e.target;
   console.log(value);
 
@@ -32,10 +40,4 @@ function onInputChange(e) {
         )
       );
   }
-}
-
-function makeGalleryItem() {
-  const makeGalleryItem = fetchImages.map(createMarkupElemetsGallery).join('');
-
-  galleryListEl.insertAdjacentHTML('beforeend', makeGalleryItem);
 }
