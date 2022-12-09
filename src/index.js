@@ -16,7 +16,6 @@ searchForm.addEventListener('submit', onSearchImages);
 let galleryImages = [];
 
 const options = {
-  root: null,
   rootMargin: '0px',
   threshold: 1.0,
 };
@@ -33,25 +32,17 @@ const callback = function (entries) {
 
 const observer = new IntersectionObserver(callback, options);
 
-observer.observe(galleryEnd);
-
-// const observer = new IntersectionObserver(async enteries => {
-//   if (enteries[0].isIntersecting) {
-//     pixabayApi.page += 1;
-//     renderGallery();
-//   }
-// }, observerOptions);
-
 function renderGallery() {
   const galleryEl = galleryImages.map(createMarkupElemetsGallery);
 
-  // galleryListEl.innerHTML = '';
   galleryListEl.insertAdjacentHTML('beforeend', galleryEl.join(''));
   const gallery = new SimpleLightbox('.gallery a');
 }
 
 async function onSearchImages(e) {
   e.preventDefault();
+  galleryListEl.innerHTML = '';
+  pixabayApi.page = 1;
   pixabayApi.searchQuery = e.currentTarget.elements.searchQuery.value;
 
   try {
@@ -62,9 +53,9 @@ async function onSearchImages(e) {
 
     const { data } = await pixabayApi.fetchPhoto();
     Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
-    galleryListEl.innerHTML = '';
     galleryImages = data.hits;
     renderGallery();
+    observer.observe(galleryEnd);
   } catch (error) {
     console.log(error.message);
     Notiflix.Notify.failure(
