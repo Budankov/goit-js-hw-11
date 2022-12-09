@@ -98,3 +98,22 @@ form > button:hover {
   justify-content: center;
   gap: 20px;
 }
+
+.photo-card {
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: rgba(89, 170, 104, 0.6);
+}
+
+.gallery__image {
+  max-width: 100%;
+  display: block;
+}
+
+.info {
+  padding: 0 20px;
+}
+.info-item {
+  font-size: 15px;
+  line-height: 0.7;
+}
