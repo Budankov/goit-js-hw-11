@@ -22,10 +22,11 @@ const options = {
 
 const callback = function (entries) {
   const line = entries[0].isIntersecting;
-  console.log(line);
+  // console.log(line);
 
   if (line) {
     pixabayApi.page += 1;
+    console.log(pixabayApi.page);
     renderGallery();
   }
 };
