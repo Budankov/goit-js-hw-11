@@ -13,31 +13,6 @@ const galleryListEl = document.querySelector('.gallery');
 
 searchForm.addEventListener('submit', onSearchImages);
 
-// function makeGalleryItem() {
-//   const makeGalleryItem = fetchImages.map(createMarkupElemetsGallery).join('');
-
-//   galleryListEl.insertAdjacentHTML('beforeend', makeGalleryItem);
-// }
-
-// function onSearchImages(e) {
-//   e.preventDefault();
-
-//   const { value } = e.target;
-//   console.log(value);
-
-//   if (value.trim() === '') {
-//     Notiflix.Notify.info('Please enter.');
-//   } else {
-//     fetchImages(value.trim())
-//       .then(makeGalleryItem)
-// .catch(error =>
-//   Notiflix.Notify.failure(
-//     'Sorry, there are no images matching your search query. Please try again'
-//   )
-// );
-//   }
-// }
-
 let galleryImages = [];
 
 function renderGallery() {
@@ -54,13 +29,14 @@ async function onSearchImages(e) {
   pixabayApi.searchQuery = e.currentTarget.elements.searchQuery.value;
 
   try {
-    const {
-      data: { hits },
-    } = await pixabayApi.fetchPhoto();
-    console.log(hits);
-    galleryImages = hits;
-    renderGallery();
+    if (pixabayApi.searchQuery.trim() !== '') {
+      const { data } = await pixabayApi.fetchPhoto();
+      console.log(data);
+      galleryImages = data.hits;
+      renderGallery();
+    }
   } catch (error) {
+    console.log(error.message);
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again'
     );
