@@ -5,12 +5,12 @@ const URL = 'https://pixabay.com/api/?key=';
 
 export class PixabayApi {
   constructor() {
-    this.page = null;
+    this.page = 1;
     this.searchQuery = '';
     this.per_page = 40;
   }
 
-  fetchPhoto() {
+  async fetchPhoto() {
     const options = {
       key: API_KEY,
       q: this.searchQuery,
@@ -21,6 +21,14 @@ export class PixabayApi {
       per_page: this.per_page,
     };
 
-    return axios.get(`${URL}`, { params: options });
+    return await axios.get(`${URL}`, { params: options });
   }
+}
+
+export async function fetchImage(query, page, per_page) {
+  const { data } = await axios.get(
+    `${BASE_URL}?key=${KEY_SUCSESS}&q=${query}&page=${page}&per_page=${per_page}`,
+    searchParams
+  );
+  return data;
 }

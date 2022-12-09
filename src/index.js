@@ -6,7 +6,6 @@ import { PixabayApi } from './js/api';
 import { createMarkupElemetsGallery } from './js/createMarkupElemetsGallery';
 
 const pixabayApi = new PixabayApi();
-const gallery = new SimpleLightbox('.gallery a');
 
 const searchForm = document.querySelector('#search-form');
 const searchBtn = document.querySelector('.search-button');
@@ -50,17 +49,25 @@ function renderGallery() {
   const gallery = new SimpleLightbox('.gallery a');
 }
 
-function onSearchImages(e) {
+async function onSearchImages(e) {
   e.preventDefault();
 
-  const { value } = e.target.elements.searchQuery;
+  pixabayApi.searchQuery = e.currentTarget.elements.searchQuery.value;
+  const {
+    data: { hits },
+  } = await pixabayApi.fetchPhoto();
+  console.log(hits);
+  galleryImages = hits;
+  renderGallery();
 
-  fetch(
-    `https://pixabay.com/api/?key=31850600-8bc33184832b82bc138f7cdcb&q=${value}`
-  )
-    .then(res => res.json())
-    .then(({ hits }) => {
-      galleryImages = hits;
-      renderGallery();
-    });
+  // const { value } = e.target.elements.searchQuery;
+
+  // fetch(
+  //   `https://pixabay.com/api/?key=31850600-8bc33184832b82bc138f7cdcb&q=${value}`
+  // )
+  //   .then(res => res.json())
+  //   .then(({ hits }) => {
+  //     galleryImages = hits;
+  //     renderGallery();
+  //   });
 }
