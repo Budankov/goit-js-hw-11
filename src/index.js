@@ -50,6 +50,8 @@ function renderGallery() {
 
   galleryListEl.innerHTML = '';
   galleryListEl.insertAdjacentHTML('beforeend', galleryEl.join(''));
+
+  const gallery = new SimpleLightbox('.gallery a');
 }
 
 function onSearchImages(e) {

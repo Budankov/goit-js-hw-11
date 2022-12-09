@@ -21,7 +21,7 @@ form {
   outline: 0;
   -webkit-border-radius: 4px;
   border-radius: 4px;
-  margin-top: 30px;
+  margin: 30px 0;
 }
 
 form > input {
@@ -89,4 +89,12 @@ form > button:hover {
 
 .load-more.visible:hover {
   background-color: rgba(0, 150, 136, 0.8);
+}
+
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 }
