@@ -30,11 +30,11 @@ searchForm.addEventListener('submit', onSearchImages);
 //   } else {
 //     fetchImages(value.trim())
 //       .then(makeGalleryItem)
-//       .catch(error =>
-//         Notiflix.Notify.failure(
-//           'Sorry, there are no images matching your search query. Please try again'
-//         )
-//       );
+// .catch(error =>
+//   Notiflix.Notify.failure(
+//     'Sorry, there are no images matching your search query. Please try again'
+//   )
+// );
 //   }
 // }
 
@@ -51,23 +51,18 @@ function renderGallery() {
 
 async function onSearchImages(e) {
   e.preventDefault();
-
   pixabayApi.searchQuery = e.currentTarget.elements.searchQuery.value;
-  const {
-    data: { hits },
-  } = await pixabayApi.fetchPhoto();
-  console.log(hits);
-  galleryImages = hits;
-  renderGallery();
 
-  // const { value } = e.target.elements.searchQuery;
-
-  // fetch(
-  //   `https://pixabay.com/api/?key=31850600-8bc33184832b82bc138f7cdcb&q=${value}`
-  // )
-  //   .then(res => res.json())
-  //   .then(({ hits }) => {
-  //     galleryImages = hits;
-  //     renderGallery();
-  //   });
+  try {
+    const {
+      data: { hits },
+    } = await pixabayApi.fetchPhoto();
+    console.log(hits);
+    galleryImages = hits;
+    renderGallery();
+  } catch (error) {
+    Notiflix.Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again'
+    );
+  }
 }
