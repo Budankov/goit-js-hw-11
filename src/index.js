@@ -20,7 +20,6 @@ function renderGallery() {
 
   galleryListEl.innerHTML = '';
   galleryListEl.insertAdjacentHTML('beforeend', galleryEl.join(''));
-
   const gallery = new SimpleLightbox('.gallery a');
 }
 
@@ -29,12 +28,15 @@ async function onSearchImages(e) {
   pixabayApi.searchQuery = e.currentTarget.elements.searchQuery.value;
 
   try {
-    if (pixabayApi.searchQuery.trim() !== '') {
-      const { data } = await pixabayApi.fetchPhoto();
-      console.log(data);
-      galleryImages = data.hits;
-      renderGallery();
+    if (pixabayApi.searchQuery.trim() === '') {
+      Notiflix.Notify.info('Enter what to look for!');
+      return;
     }
+
+    const { data } = await pixabayApi.fetchPhoto();
+    Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+    galleryImages = data.hits;
+    renderGallery();
   } catch (error) {
     console.log(error.message);
     Notiflix.Notify.failure(
