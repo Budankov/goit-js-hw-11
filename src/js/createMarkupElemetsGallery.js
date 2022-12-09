@@ -34,24 +34,3 @@ export function createMarkupElemetsGallery({
   </div>
 </div>`;
 }
-
-// export function createMarkupElemetsGallery({
-//   webformatURL,
-//   largeImageURL,
-//   tags,
-//   likes,
-//   views,
-//   comments,
-//   downloads,
-// }) {
-//   return `
-//   <a class="gallery__item" href="${largeImageURL}">
-//     <img
-//       class="gallery__image"
-//       src="${webformatURL}"
-//       alt="${tags}"
-//       width="400"
-//       height="250"
-//     />
-//   </a>`;
-// }

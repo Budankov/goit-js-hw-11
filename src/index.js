@@ -5,9 +5,6 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import { PixabayApi } from './js/api';
 import { createMarkupElemetsGallery } from './js/createMarkupElemetsGallery';
 
-const debounce = require('lodash.debounce');
-const DEBOUNCE_DELAY = 300;
-
 const pixabayApi = new PixabayApi();
 const gallery = new SimpleLightbox('.gallery a');
 
@@ -15,7 +12,6 @@ const searchForm = document.querySelector('#search-form');
 const searchBtn = document.querySelector('.search-button');
 const galleryListEl = document.querySelector('.gallery');
 
-// searchForm.addEventListener('submit', debounce(onSearchImages, DEBOUNCE_DELAY));
 searchForm.addEventListener('submit', onSearchImages);
 
 // function makeGalleryItem() {
