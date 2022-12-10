@@ -20,14 +20,18 @@ const options = {
   threshold: 1.0,
 };
 
-const callback = function (entries) {
+const callback = async function (entries) {
   const line = entries[0].isIntersecting;
   // console.log(line);
 
   if (line) {
-    pixabayApi.page += 1;
     console.log(pixabayApi.page);
+    pixabayApi.page += 1;
+
+    const { data } = await pixabayApi.fetchPhoto();
+    galleryImages = data.hits;
     renderGallery();
+    gallery.refresh();
   }
 };
 
@@ -53,9 +57,10 @@ async function onSearchImages(e) {
     }
 
     const { data } = await pixabayApi.fetchPhoto();
-    Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
     galleryImages = data.hits;
     renderGallery();
+    Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+
     observer.observe(galleryEnd);
   } catch (error) {
     console.log(error.message);
