@@ -22,16 +22,13 @@ const options = {
 
 const callback = async function (entries) {
   const line = entries[0].isIntersecting;
-  // console.log(line);
 
   if (line) {
-    console.log(pixabayApi.page);
+    // console.log(pixabayApi.page);
     pixabayApi.page += 1;
-
     const { data } = await pixabayApi.fetchPhoto();
     galleryImages = data.hits;
     renderGallery();
-    gallery.refresh();
   }
 };
 
@@ -39,9 +36,10 @@ const observer = new IntersectionObserver(callback, options);
 
 function renderGallery() {
   const galleryEl = galleryImages.map(createMarkupElemetsGallery);
-
   galleryListEl.insertAdjacentHTML('beforeend', galleryEl.join(''));
+
   const gallery = new SimpleLightbox('.gallery a');
+  gallery.refresh();
 }
 
 async function onSearchImages(e) {
@@ -55,13 +53,19 @@ async function onSearchImages(e) {
       Notiflix.Notify.info('Enter what to look for!');
       return;
     }
-
     const { data } = await pixabayApi.fetchPhoto();
+    // console.log(data.hits);dwq
     galleryImages = data.hits;
     renderGallery();
     Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
-
     observer.observe(galleryEnd);
+
+    if (data.hits.length <= 0) {
+      Notiflix.Notify.info(
+        "We're sorry, but you've reached the end of search results."
+      );
+    }
+    console.log(data.hits.length);
   } catch (error) {
     console.log(error.message);
     Notiflix.Notify.failure(
