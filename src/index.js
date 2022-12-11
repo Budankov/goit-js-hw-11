@@ -69,7 +69,6 @@ async function onSearchImages(e) {
     if (data.hits.length > 0) {
       Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
     }
-    console.log(data.hits.length);
   } catch (error) {
     console.log(error.message);
     Notiflix.Notify.failure(
