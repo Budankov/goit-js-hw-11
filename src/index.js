@@ -24,11 +24,17 @@ const options = {
 const callback = async function (entries) {
   const line = entries[0].isIntersecting;
 
-  if (line) {
-    pixabayApi.page += 1;
-    const { data } = await pixabayApi.fetchPhoto();
-    galleryImages = data.hits;
-    renderGallery();
+  try {
+    if (line) {
+      pixabayApi.page += 1;
+      const { data } = await pixabayApi.fetchPhoto();
+      galleryImages = data.hits;
+      renderGallery();
+    }
+  } catch (error) {
+    Notiflix.Notify.info(
+      "We're sorry, but you've reached the end of search results."
+    );
   }
 };
 

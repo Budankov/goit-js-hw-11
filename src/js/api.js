@@ -7,7 +7,7 @@ export class PixabayApi {
   constructor() {
     this.page = 1;
     this.searchQuery = '';
-    this.per_page = 40;
+    this.per_page = 100;
   }
 
   async fetchPhoto() {
