@@ -12,7 +12,7 @@ const searchForm = document.querySelector('#search-form');
 const galleryListEl = document.querySelector('.gallery');
 const galleryEnd = document.querySelector('.gallary-end');
 
-searchForm.addEventListener('submit', onSearchImages);
+searchForm.addEventListener('submit', onSearchImages, { passive: false });
 
 let galleryImages = [];
 
