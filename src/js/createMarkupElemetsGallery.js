@@ -13,8 +13,8 @@ export function createMarkupElemetsGallery({
       class="gallery__image"
       src="${webformatURL}"
       alt="${tags}"
-      width="372"
-      height="240"
+      width = '372';
+      height = '240';
     />
   </a>
 

@@ -1,4 +1,5 @@
 import './css/styles.css';
+import './js/back-to-top';
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -66,9 +67,9 @@ async function onSearchImages(e) {
     }
 
     if (data.hits.length > 0) {
-      observer.unobserve(galleryEnd);
       Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
     }
+    console.log(data.hits.length);
   } catch (error) {
     console.log(error.message);
     Notiflix.Notify.failure(
