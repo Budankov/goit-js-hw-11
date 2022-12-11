@@ -7,6 +7,7 @@ import { PixabayApi } from './js/api';
 import { createMarkupElemetsGallery } from './js/createMarkupElemetsGallery';
 
 const pixabayApi = new PixabayApi();
+const gallery = new SimpleLightbox('.gallery a');
 
 const searchForm = document.querySelector('#search-form');
 const galleryListEl = document.querySelector('.gallery');
@@ -43,8 +44,6 @@ const observer = new IntersectionObserver(callback, options);
 function renderGallery() {
   const galleryEl = galleryImages.map(createMarkupElemetsGallery);
   galleryListEl.insertAdjacentHTML('beforeend', galleryEl.join(''));
-
-  const gallery = new SimpleLightbox('.gallery a');
   gallery.refresh();
 }
 
