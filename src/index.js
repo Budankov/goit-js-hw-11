@@ -24,7 +24,6 @@ const callback = async function (entries) {
   const line = entries[0].isIntersecting;
 
   if (line) {
-    // console.log(pixabayApi.page);
     pixabayApi.page += 1;
     const { data } = await pixabayApi.fetchPhoto();
     galleryImages = data.hits;
@@ -44,6 +43,7 @@ function renderGallery() {
 
 async function onSearchImages(e) {
   e.preventDefault();
+  observer.unobserve(galleryEnd);
   galleryListEl.innerHTML = '';
   pixabayApi.page = 1;
   pixabayApi.searchQuery = e.currentTarget.elements.searchQuery.value;
@@ -54,18 +54,21 @@ async function onSearchImages(e) {
       return;
     }
     const { data } = await pixabayApi.fetchPhoto();
-    // console.log(data.hits);dwq
     galleryImages = data.hits;
     renderGallery();
-    Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
     observer.observe(galleryEnd);
 
     if (data.hits.length <= 0) {
-      Notiflix.Notify.info(
-        "We're sorry, but you've reached the end of search results."
+      observer.unobserve(galleryEnd);
+      Notiflix.Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again'
       );
     }
-    console.log(data.hits.length);
+
+    if (data.hits.length > 0) {
+      observer.unobserve(galleryEnd);
+      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+    }
   } catch (error) {
     console.log(error.message);
     Notiflix.Notify.failure(
