@@ -23,11 +23,5 @@ export class PixabayApi {
 
     return await axios.get(`${URL}`, { params: options });
   }
-}
 
-export async function fetchImage(query, page, per_page) {
-  const { data } = await axios.get(
-    `${URL}?key=${API_KEY}&q=${query}&page=${page}&per_page=${per_page}`
-  );
-  return data;
 }
