@@ -27,7 +27,7 @@ export class PixabayApi {
 
 export async function fetchImage(query, page, per_page) {
   const { data } = await axios.get(
-    `${BASE_URL}?key=${KEY_SUCSESS}&q=${query}&page=${page}&per_page=${per_page}`
+    `${URL}?key=${API_KEY}&q=${query}&page=${page}&per_page=${per_page}`
   );
   return data;
 }
