@@ -1,33 +1,14 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_KEY = '31850600-8bc33184832b82bc138f7cdcb';
-const URL = 'https://pixabay.com/api/?key=';
+const API_KEY = "53f2c47317a563cd2628c68ceb6a6673";
+const URL = "https://api.themoviedb.org/3/trending/all/day?api_key=";
 
-export class PixabayApi {
+export class FetchAPI {
   constructor() {
     this.page = 1;
-    this.searchQuery = '';
-    this.per_page = 40;
   }
 
-  async fetchPhoto() {
-    const options = {
-      key: API_KEY,
-      q: this.searchQuery,
-      image_type: 'photo',
-      orientation: 'horizontal',
-      safesearch: 'true',
-      page: this.page,
-      per_page: this.per_page,
-    };
-
-    return await axios.get(`${URL}`, { params: options });
+  async fetchTrendingFilms() {
+    return await axios.get(`${URL}${API_KEY}`);
   }
-}
-
-export async function fetchImage(query, page, per_page) {
-  const { data } = await axios.get(
-    `${BASE_URL}?key=${KEY_SUCSESS}&q=${query}&page=${page}&per_page=${per_page}`
-  );
-  return data;
 }
