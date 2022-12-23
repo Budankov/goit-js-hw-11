@@ -3,13 +3,13 @@
 }
 
 body {
-  background: url("http://i.hizliresim.com/v4Qykv.png") no-repeat center center
+  background: url('http://i.hizliresim.com/v4Qykv.png') no-repeat center center
     fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  font-family: "Roboto", Tahoma, Arial, sans-serif;
+  font-family: 'Roboto', Tahoma, Arial, sans-serif;
   line-height: 1.5;
   font-size: 13px;
 }
@@ -123,13 +123,6 @@ form > button:hover {
   line-height: 0.7;
 }
 
-.info-other {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
 #back-to-top {
   display: inline-block;
   background-color: #212121;
@@ -156,7 +149,7 @@ form > button:hover {
 }
 
 #back-to-top::after {
-  content: "\f077";
+  content: '\f077';
   font-family: FontAwesome;
   font-weight: normal;
   font-style: normal;

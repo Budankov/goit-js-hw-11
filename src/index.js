@@ -1,27 +1,83 @@
-import "./css/styles.css";
-import { FetchAPI } from "./js/api";
-import { createMarkupElemetsGallery } from "./js/createMarkupElemetsGallery";
+import './css/styles.css';
+import './js/back-to-top';
+import Notiflix from 'notiflix';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+import { PixabayApi } from './js/api';
+import { createMarkupElemetsGallery } from './js/createMarkupElemetsGallery';
 
-const searchForm = document.querySelector("#search-form");
-const galleryList = document.querySelector(".gallery");
+const pixabayApi = new PixabayApi();
+const gallery = new SimpleLightbox('.gallery a');
 
-const fetchApi = new FetchAPI();
+const searchForm = document.querySelector('#search-form');
+const galleryListEl = document.querySelector('.gallery');
+const galleryEnd = document.querySelector('.gallary-end');
 
-searchForm.addEventListener("submit", trendingFilms);
+searchForm.addEventListener('submit', onSearchImages, { passive: false });
 
-let galleryEl = [];
+let galleryImages = [];
 
-async function trendingFilms(e) {
-  e.preventDefault();
-  galleryList.innerHTML = "";
-  fetchApi.page = 1;
-  const { data } = await fetchApi.fetchTrendingFilms();
-  galleryEl = data.results;
-  console.log(galleryEl);
-  renderGallery();
-}
+const options = {
+  rootMargin: '0px',
+  threshold: 1.0,
+};
+
+const callback = async function (entries) {
+  const line = entries[0].isIntersecting;
+
+  try {
+    if (line) {
+      pixabayApi.page += 1;
+      const { data } = await pixabayApi.fetchPhoto();
+      galleryImages = data.hits;
+      renderGallery();
+    }
+  } catch (error) {
+    Notiflix.Notify.info(
+      "We're sorry, but you've reached the end of search results."
+    );
+  }
+};
+
+const observer = new IntersectionObserver(callback, options);
 
 function renderGallery() {
-  const galleryElements = galleryEl.map(createMarkupElemetsGallery);
-  galleryList.insertAdjacentHTML("beforeend", galleryElements.join(""));
+  const galleryEl = galleryImages.map(createMarkupElemetsGallery);
+  galleryListEl.insertAdjacentHTML('beforeend', galleryEl.join(''));
+  gallery.refresh();
+}
+
+async function onSearchImages(e) {
+  e.preventDefault();
+  observer.unobserve(galleryEnd);
+  galleryListEl.innerHTML = '';
+  pixabayApi.page = 1;
+  pixabayApi.searchQuery = e.currentTarget.elements.searchQuery.value;
+
+  try {
+    if (pixabayApi.searchQuery.trim() === '') {
+      Notiflix.Notify.info('Enter what to look for!');
+      return;
+    }
+    const { data } = await pixabayApi.fetchPhoto();
+    galleryImages = data.hits;
+    renderGallery();
+    observer.observe(galleryEnd);
+
+    if (data.hits.length <= 0) {
+      observer.unobserve(galleryEnd);
+      Notiflix.Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again'
+      );
+    }
+
+    if (data.hits.length > 0) {
+      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+    }
+  } catch (error) {
+    console.log(error.message);
+    Notiflix.Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again'
+    );
+  }
 }
