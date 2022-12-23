@@ -1,36 +1,25 @@
 export function createMarkupElemetsGallery({
-  webformatURL,
-  largeImageURL,
-  tags,
-  likes,
-  views,
-  comments,
-  downloads,
+  title,
+  poster_path,
+  release_date = [],
 }) {
   return `<div class="photo-card">
-  <a class="gallery__item" href="${largeImageURL}">
+  <a class="gallery__item">
     <img
       class="gallery__image"
-      src="${webformatURL}"
-      alt="${tags}"
-      width = '372';
-      height = '240';
+      src="https://image.tmdb.org/t/p/w1280${poster_path}"
+      alt="${title}"
+      width = '395';
+      height = '574';
     />
   </a>
 
   <div class="info">
-    <p class="info-item">
-      <b>Likes: </b>${likes}
-    </p>
-    <p class="info-item">
-      <b>Views: </b>${views}
-    </p>
-    <p class="info-item">
-      <b>Comments: </b>${comments}
-    </p>
-    <p class="info-item">
-      <b>Downloads: </b>${downloads}
-    </p>
+    <p class="info-item">${title}</p>
+    <div class="info-other">
+      <p class="info-item">Жанр: </b>хер знає</p>
+      <p class="info-item">${release_date}</p>
+    </div>
   </div>
 </div>`;
 }

@@ -2,24 +2,23 @@
   "name": "parcel-project-template",
   "version": "2.0.0",
   "description": "",
-  "homepage": "https://budankov.github.io/goit-js-hw-11/",
+  "homepage": "https://budankov.github.io/FilmotekaTest/",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /goit-js-hw-11/"
+    "build": "parcel build src/*.html --public-url /FilmotekaTest/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Budankov/goit-js-hw-11"
+    "url": "git+https://github.com/Budankov/FilmotekaTest"
   },
   "keywords": [],
   "author": "Budankov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Budankov/goit-js-hw-11/issues"
+    "url": "https://github.com/Budankov/FilmotekaTest/issues"
   },
   "dependencies": {
     "axios": "^1.2.0",
-    "lodash.debounce": "^4.0.8",
     "modern-normalize": "^1.1.0",
     "notiflix": "^3.2.5",
     "simplelightbox": "^2.11.0"
